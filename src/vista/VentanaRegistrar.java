@@ -135,6 +135,8 @@ public class VentanaRegistrar extends JDialog implements ActionListener {
 		contentPane.add(pnlCatalogo);
 
 		modeloTabla = new DefaultTableModel(new String[] { "Producto", "Precio unitario", "Stock", "Cantidad" }, 0) {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int fila, int col) {
 				return col == 3;
@@ -364,10 +366,9 @@ public class VentanaRegistrar extends JDialog implements ActionListener {
 	    StringBuilder detalle = new StringBuilder();
 	    detalle.append("Productos comprados:\n");
 	    for (ProductoCatalogoDTO prod : carrito) {
-	        detalle.append(String.format("  %-30s x%-3d  $%,.2f%n",
-	            prod.getNombre(),
-	            prod.getCantidadSeleccionada(),
-	            prod.getSubtotal()));
+	        detalle.append("  ").append(prod.getNombre())
+	               .append(" x").append(prod.getCantidadSeleccionada())
+	               .append("  $").append(prod.getSubtotal()).append("\n");
 	    }
 	    txtDetalle.setText(detalle.toString());
 	    txtDetalle.setCaretPosition(0); 
@@ -497,7 +498,7 @@ public class VentanaRegistrar extends JDialog implements ActionListener {
 					} else {
 						
 						modeloTabla.setValueAt(nuevoStock, i, 2);
-						modeloTabla.setValueAt(0, i, 3); // resetea cantidad
+						modeloTabla.setValueAt(0, i, 3); 
 					}
 					break;
 				}
@@ -508,7 +509,9 @@ public class VentanaRegistrar extends JDialog implements ActionListener {
 	private void colorearFila(int fila, Color color) {
 	    tblCatalogo.setDefaultRenderer(Object.class,
 	        new javax.swing.table.DefaultTableCellRenderer() {
-	            @Override
+	            private static final long serialVersionUID = 1L;
+
+				@Override
 	            public java.awt.Component getTableCellRendererComponent(
 	                    JTable table, Object value, boolean isSelected,
 	                    boolean hasFocus, int row, int column) {

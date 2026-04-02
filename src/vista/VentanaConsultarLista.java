@@ -16,176 +16,160 @@ import modelo.dto.DetalleCompraDTO;
 
 public class VentanaConsultarLista extends JDialog implements ActionListener {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    
-    private JTable            tblCompras;
-    private DefaultTableModel modeloCompras;
+	private JTable tblCompras;
+	private DefaultTableModel modeloCompras;
 
-    
-    private JTable            tblDetalle;
-    private DefaultTableModel modeloDetalle;
+	private JTable tblDetalle;
+	private DefaultTableModel modeloDetalle;
 
-    
-    private JLabel lblResumen;
+	private JLabel lblResumen;
 
-    
-    private JButton btnVerDetalle;
-    private JButton btnCerrar;
+	private JButton btnVerDetalle;
+	private JButton btnCerrar;
 
-    
-    private Coordinador miCoordinador;
+	private Coordinador miCoordinador;
 
-    
-    public VentanaConsultarLista(VentanaPrincipal padre, boolean modal) {
-        super(padre, modal);
-        setTitle("Historial de Compras — DON APARATO");
-        setBounds(100, 100, 620, 580);
-        setLocationRelativeTo(null);
+	public VentanaConsultarLista(VentanaPrincipal padre, boolean modal) {
+		super(padre, modal);
+		setTitle("Historial de Compras — DON APARATO");
+		setBounds(100, 100, 620, 580);
+		setLocationRelativeTo(null);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
-        contentPane.setLayout(null);
-        setContentPane(contentPane);
+		JPanel contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		contentPane.setLayout(null);
+		setContentPane(contentPane);
 
-        
-        JPanel pnlCompras = new JPanel();
-        pnlCompras.setBorder(new TitledBorder("Compras registradas"));
-        pnlCompras.setLayout(null);
-        pnlCompras.setBounds(10, 10, 585, 210);
-        contentPane.add(pnlCompras);
+		JPanel pnlCompras = new JPanel();
+		pnlCompras.setBorder(new TitledBorder("Compras registradas"));
+		pnlCompras.setLayout(null);
+		pnlCompras.setBounds(10, 10, 585, 210);
+		contentPane.add(pnlCompras);
 
-        modeloCompras = new DefaultTableModel(
-            new String[]{"ID", "Cliente", "Descuento", "Total sin desc.", "Total a pagar"}, 0
-        ) {
-            @Override
-            public boolean isCellEditable(int row, int col) { return false; }
-        };
+		modeloCompras = new DefaultTableModel(
+				new String[] { "ID", "Cliente", "Descuento", "Total sin desc.", "Total a pagar" }, 0) {
+			private static final long serialVersionUID = 1L;
 
-        tblCompras = new JTable(modeloCompras);
-        tblCompras.getColumnModel().getColumn(0).setPreferredWidth(35);
-        tblCompras.getColumnModel().getColumn(1).setPreferredWidth(150);
-        tblCompras.getColumnModel().getColumn(2).setPreferredWidth(110);
-        tblCompras.getColumnModel().getColumn(3).setPreferredWidth(120);
-        tblCompras.getColumnModel().getColumn(4).setPreferredWidth(120);
-        tblCompras.setRowHeight(24);
-        tblCompras.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tblCompras.getTableHeader().setReorderingAllowed(false);
+			@Override
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			}
+		};
 
-        JScrollPane scrollCompras = new JScrollPane(tblCompras);
-        scrollCompras.setBounds(10, 20, 565, 170);
-        pnlCompras.add(scrollCompras);
+		tblCompras = new JTable(modeloCompras);
+		tblCompras.getColumnModel().getColumn(0).setPreferredWidth(35);
+		tblCompras.getColumnModel().getColumn(1).setPreferredWidth(150);
+		tblCompras.getColumnModel().getColumn(2).setPreferredWidth(110);
+		tblCompras.getColumnModel().getColumn(3).setPreferredWidth(120);
+		tblCompras.getColumnModel().getColumn(4).setPreferredWidth(120);
+		tblCompras.setRowHeight(24);
+		tblCompras.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tblCompras.getTableHeader().setReorderingAllowed(false);
 
-   
-        btnVerDetalle = new JButton("Ver detalle de compra seleccionada");
-        btnVerDetalle.setBounds(10, 232, 280, 32);
-        btnVerDetalle.setForeground(Color.BLACK);
-        btnVerDetalle.setOpaque(true);
-        contentPane.add(btnVerDetalle);
-        btnVerDetalle.addActionListener(this);
+		JScrollPane scrollCompras = new JScrollPane(tblCompras);
+		scrollCompras.setBounds(10, 20, 565, 170);
+		pnlCompras.add(scrollCompras);
 
-        lblResumen = new JLabel("");
-        lblResumen.setFont(new Font("Segoe UI", Font.ITALIC, 12));
-        lblResumen.setBounds(300, 232, 295, 32);
-        contentPane.add(lblResumen);
+		btnVerDetalle = new JButton("Ver detalle de compra seleccionada");
+		btnVerDetalle.setBounds(10, 232, 280, 32);
+		btnVerDetalle.setForeground(Color.BLACK);
+		btnVerDetalle.setOpaque(true);
+		contentPane.add(btnVerDetalle);
+		btnVerDetalle.addActionListener(this);
 
-        
-        JPanel pnlDetalle = new JPanel();
-        pnlDetalle.setBorder(new TitledBorder("Detalle de productos"));
-        pnlDetalle.setLayout(null);
-        pnlDetalle.setBounds(10, 275, 585, 210);
-        contentPane.add(pnlDetalle);
+		lblResumen = new JLabel("");
+		lblResumen.setFont(new Font("Segoe UI", Font.ITALIC, 12));
+		lblResumen.setBounds(300, 232, 295, 32);
+		contentPane.add(lblResumen);
 
-        modeloDetalle = new DefaultTableModel(
-            new String[]{"Producto", "Cantidad", "Subtotal"}, 0
-        ) {
-            @Override
-            public boolean isCellEditable(int row, int col) { return false; }
-        };
+		JPanel pnlDetalle = new JPanel();
+		pnlDetalle.setBorder(new TitledBorder("Detalle de productos"));
+		pnlDetalle.setLayout(null);
+		pnlDetalle.setBounds(10, 275, 585, 210);
+		contentPane.add(pnlDetalle);
 
-        tblDetalle = new JTable(modeloDetalle);
-        tblDetalle.getColumnModel().getColumn(0).setPreferredWidth(280);
-        tblDetalle.getColumnModel().getColumn(1).setPreferredWidth(80);
-        tblDetalle.getColumnModel().getColumn(2).setPreferredWidth(120);
-        tblDetalle.setRowHeight(24);
-        tblDetalle.getTableHeader().setReorderingAllowed(false);
+		modeloDetalle = new DefaultTableModel(new String[] { "Producto", "Cantidad", "Subtotal" }, 0) {
+			private static final long serialVersionUID = 1L;
 
-        JScrollPane scrollDetalle = new JScrollPane(tblDetalle);
-        scrollDetalle.setBounds(10, 20, 565, 170);
-        pnlDetalle.add(scrollDetalle);
+			@Override
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			}
+		};
 
-     
-        btnCerrar = new JButton("Cerrar");
-        btnCerrar.setBounds(240, 498, 120, 32);
-        btnCerrar.setForeground(Color.BLACK);
-        btnCerrar.setOpaque(true);
-        contentPane.add(btnCerrar);
-        btnCerrar.addActionListener(this);
-    }
+		tblDetalle = new JTable(modeloDetalle);
+		tblDetalle.getColumnModel().getColumn(0).setPreferredWidth(280);
+		tblDetalle.getColumnModel().getColumn(1).setPreferredWidth(80);
+		tblDetalle.getColumnModel().getColumn(2).setPreferredWidth(120);
+		tblDetalle.setRowHeight(24);
+		tblDetalle.getTableHeader().setReorderingAllowed(false);
 
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnVerDetalle) verDetalleSeleccionado();
-        else if (e.getSource() == btnCerrar) setVisible(false);
-    }
+		JScrollPane scrollDetalle = new JScrollPane(tblDetalle);
+		scrollDetalle.setBounds(10, 20, 565, 170);
+		pnlDetalle.add(scrollDetalle);
 
-    
-    private void verDetalleSeleccionado() {
-        int filaSeleccionada = tblCompras.getSelectedRow();
-        if (filaSeleccionada == -1) {
-            lblResumen.setForeground(java.awt.Color.RED);
-            lblResumen.setText("Selecciona una compra primero.");
-            return;
-        }
+		btnCerrar = new JButton("Cerrar");
+		btnCerrar.setBounds(240, 498, 120, 32);
+		btnCerrar.setForeground(Color.BLACK);
+		btnCerrar.setOpaque(true);
+		contentPane.add(btnCerrar);
+		btnCerrar.addActionListener(this);
+	}
 
-        int idCompra = (int) modeloCompras.getValueAt(filaSeleccionada, 0);
-        ArrayList<DetalleCompraDTO> detalle =
-            miCoordinador.consultarDetallePorCompra(idCompra);
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnVerDetalle)
+			verDetalleSeleccionado();
+		else if (e.getSource() == btnCerrar)
+			setVisible(false);
+	}
 
-        modeloDetalle.setRowCount(0);
-        for (DetalleCompraDTO d : detalle) {
-            modeloDetalle.addRow(new Object[]{
-                d.getNombreProducto(),
-                d.getCantidad(),
-                String.format("$%,.2f", d.getSubtotal())
-            });
-        }
+	private void verDetalleSeleccionado() {
+		int filaSeleccionada = tblCompras.getSelectedRow();
+		if (filaSeleccionada == -1) {
+			lblResumen.setForeground(java.awt.Color.RED);
+			lblResumen.setText("Selecciona una compra primero.");
+			return;
+		}
 
-        lblResumen.setForeground(new java.awt.Color(0, 80, 180));
-        lblResumen.setText("Compra #" + idCompra
-            + " — " + detalle.size() + " producto(s)");
-    }
+		int idCompra = (int) modeloCompras.getValueAt(filaSeleccionada, 0);
+		ArrayList<DetalleCompraDTO> detalle = miCoordinador.consultarDetallePorCompra(idCompra);
 
-    public void cargarLista() {
-        ArrayList<ClienteDTO> clientes = miCoordinador.consultarClientes();
-        modeloCompras.setRowCount(0);
-        modeloDetalle.setRowCount(0);
-        lblResumen.setText("");
+		modeloDetalle.setRowCount(0);
+		for (DetalleCompraDTO d : detalle) {
+			modeloDetalle.addRow(
+					new Object[] { d.getNombreProducto(), d.getCantidad(), String.format("$%,.2f", d.getSubtotal()) });
+		}
 
-        for (ClienteDTO c : clientes) {
-            ArrayList<CompraDTO> compras =
-                miCoordinador.consultarComprasPorCliente(c.getDocumento());
+		lblResumen.setForeground(new java.awt.Color(0, 80, 180));
+		lblResumen.setText("Compra #" + idCompra + " — " + detalle.size() + " producto(s)");
+	}
 
-            for (CompraDTO compra : compras) {
-                modeloCompras.addRow(new Object[]{
-                    compra.getIdCompra(),
-                    c.getNombre() + " " + c.getApellido(),
-                    compra.getMensajeDescuento(),
-                    String.format("$%,.2f", compra.getTotalSinDescuento()),
-                    String.format("$%,.2f", compra.getTotalConDescuento())
-                });
-            }
-        }
+	public void cargarLista() {
+		ArrayList<ClienteDTO> clientes = miCoordinador.consultarClientes();
+		modeloCompras.setRowCount(0);
+		modeloDetalle.setRowCount(0);
+		lblResumen.setText("");
 
-        if (modeloCompras.getRowCount() == 0) {
-            lblResumen.setForeground(java.awt.Color.GRAY);
-            lblResumen.setText("No hay compras registradas.");
-        }
-    }
+		for (ClienteDTO c : clientes) {
+			ArrayList<CompraDTO> compras = miCoordinador.consultarComprasPorCliente(c.getDocumento());
 
+			for (CompraDTO compra : compras) {
+				modeloCompras.addRow(new Object[] { compra.getIdCompra(), c.getNombre() + " " + c.getApellido(),
+						compra.getMensajeDescuento(), String.format("$%,.2f", compra.getTotalSinDescuento()),
+						String.format("$%,.2f", compra.getTotalConDescuento()) });
+			}
+		}
 
-    public void setCoordinador(Coordinador c) {
-        this.miCoordinador = c;
-    }
+		if (modeloCompras.getRowCount() == 0) {
+			lblResumen.setForeground(java.awt.Color.GRAY);
+			lblResumen.setText("No hay compras registradas.");
+		}
+	}
+
+	public void setCoordinador(Coordinador c) {
+		this.miCoordinador = c;
+	}
 }

@@ -10,7 +10,6 @@ import modelo.dto.DetalleCompraDTO;
 
 public class DetalleCompraDAO {
 
-    // ── CREATE — guarda una línea del carrito ─────────────────────────────────
     public String registrarDetalle(DetalleCompraDTO dto) {
         String resultado = "error";
         ConexionBD conexion = new ConexionBD();
@@ -37,7 +36,7 @@ public class DetalleCompraDAO {
         return resultado;
     }
 
-    // ── READ por compra ───────────────────────────────────────────────────────
+    
     public ArrayList<DetalleCompraDTO> consultarPorCompra(int idCompra) {
         ArrayList<DetalleCompraDTO> lista = new ArrayList<>();
         ConexionBD conexion = new ConexionBD();

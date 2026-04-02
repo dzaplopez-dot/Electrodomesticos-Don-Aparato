@@ -16,7 +16,7 @@ import vista.VentanaRegistrar;
 
 public class Coordinador {
 
-	// ── Atributos ─────────────────────────────────────────────────────────────
+	
 	private VentanaPrincipal miVentanaPrincipal;
 	private VentanaConsultarLista miVentanaConsultarLista;
 	private VentanaRegistrar miVentanaRegistrar;
@@ -26,7 +26,7 @@ public class Coordinador {
 	private CompraDAO miCompraDAO;
 	private DetalleCompraDAO miDetalleCompraDAO;
 
-	// ── Setters de inyección ──────────────────────────────────────────────────
+	
 	public void setVentanaPrincipal(VentanaPrincipal v) {
 		this.miVentanaPrincipal = v;
 	}
@@ -59,14 +59,14 @@ public class Coordinador {
 		this.miDetalleCompraDAO = dao;
 	}
 
-	// ── Navegación ────────────────────────────────────────────────────────────
+
 	public void mostrarVentanaPrincipal() {
 		miVentanaPrincipal.setVisible(true);
 	}
 
 	public void mostrarVentanaRegistrar() {
 		miVentanaRegistrar.limpiar();
-		miVentanaRegistrar.cargarCatalogo(); // ← carga la JTable antes de mostrar
+		miVentanaRegistrar.cargarCatalogo(); 
 		miVentanaRegistrar.setVisible(true);
 	}
 
@@ -75,7 +75,7 @@ public class Coordinador {
 		miVentanaConsultarLista.setVisible(true);
 	}
 
-	// ── Flujo: buscar cliente ─────────────────────────────────────────────────
+	
 	public void buscarCliente(String documento) {
 		ClienteDTO c = miClienteDAO.consultarPorDocumento(documento);
 		if (c != null) {
@@ -87,20 +87,20 @@ public class Coordinador {
 
 	public void realizarCompraCarrito(ClienteDTO cliente, ArrayList<ProductoCatalogoDTO> carrito) {
 
-		// Validar que el carrito no esté vacío
+		
 		if (carrito.isEmpty()) {
 			miVentanaRegistrar.mostrarErrorCarritoVacio();
 			return;
 		}
 
-		// 1. Modelo calcula
+		
 		CompraDTO compra = new CompraDTO();
 		misProcesos.calcularCarrito(cliente, carrito, compra);
 
-		// 2. Guardar cliente
+		
 		miClienteDAO.registrarCliente(cliente);
 
-		// 3. Guardar encabezado de compra — obtener id generado
+		
 		int idCompra = miCompraDAO.registrarCompra(compra);
 		if (idCompra == -1) {
 			miVentanaRegistrar.mostrarErrorGuardado();
@@ -108,7 +108,7 @@ public class Coordinador {
 		}
 		compra.setIdCompra(idCompra);
 
-		// 4. Guardar cada línea del carrito
+		
 		for (ProductoCatalogoDTO prod : carrito) {
 			DetalleCompraDTO detalle = new DetalleCompraDTO();
 			detalle.setIdCompra(idCompra);
@@ -117,16 +117,16 @@ public class Coordinador {
 			detalle.setSubtotal(prod.getSubtotal());
 			miDetalleCompraDAO.registrarDetalle(detalle);
 
-			// 5. Descontar stock
+			
 			miProductoCatalogoDAO.actualizarStock(prod.getId(), prod.getCantidadSeleccionada());
 		}
 
-		// 6. Vista pinta el resultado
+		
 		miVentanaRegistrar.mostrarResultadoCarrito(cliente, compra, carrito);
 		miVentanaRegistrar.actualizarStockEnTabla(carrito);
 	}
 
-	// ── Flujo: mostrar datos del usuario ──────────────────────────────────────
+	
 	public void mostrarDatosUsuario(ClienteDTO cliente) {
 		boolean vacios = cliente.getNombre().isBlank() || cliente.getApellido().isBlank()
 				|| cliente.getDocumento().isBlank();
@@ -136,12 +136,12 @@ public class Coordinador {
 			miVentanaRegistrar.mostrarDatosUsuario(cliente);
 	}
 
-	// ── Catálogo ──────────────────────────────────────────────────────────────
+	
 	public ArrayList<ProductoCatalogoDTO> consultarCatalogo() {
 		return miProductoCatalogoDAO.consultarTodos();
 	}
 
-	// ── Consultas para VentanaConsultarLista ──────────────────────────────────
+	
 	public ArrayList<ClienteDTO> consultarClientes() {
 		return miClienteDAO.consultarLista();
 	}

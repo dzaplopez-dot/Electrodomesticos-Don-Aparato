@@ -10,7 +10,6 @@ import modelo.dto.CompraDTO;
 
 public class CompraDAO {
 
-    // ── CREATE — retorna el id generado ───────────────────────────────────────
     public int registrarCompra(CompraDTO dto) {
         int idGenerado = -1;
         ConexionBD conexion = new ConexionBD();
@@ -45,7 +44,7 @@ public class CompraDAO {
         return idGenerado;
     }
 
-    // ── READ lista por cliente ────────────────────────────────────────────────
+    
     public ArrayList<CompraDTO> consultarPorCliente(String documento) {
         ArrayList<CompraDTO> lista = new ArrayList<>();
         ConexionBD conexion = new ConexionBD();

@@ -10,7 +10,7 @@ import modelo.dto.ProductoCatalogoDTO;
 
 public class ProductoCatalogoDAO {
 
-    // ── READ lista completa ───────────────────────────────────────────────────
+    
     public ArrayList<ProductoCatalogoDTO> consultarTodos() {
         ArrayList<ProductoCatalogoDTO> lista = new ArrayList<>();
         ConexionBD conexion = new ConexionBD();
@@ -43,7 +43,6 @@ public class ProductoCatalogoDAO {
         return lista;
     }
 
-    // ── UPDATE stock ──────────────────────────────────────────────────────────
     public String actualizarStock(int idProducto, int cantidadVendida) {
         String resultado = "error";
         ConexionBD conexion = new ConexionBD();

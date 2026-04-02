@@ -15,7 +15,7 @@ public class Relaciones {
 
     public Relaciones() {
 
-        // 1. Crear instancias
+        
         VentanaPrincipal      vp  = new VentanaPrincipal();
         VentanaRegistrar      vr  = new VentanaRegistrar(vp, true);
         VentanaConsultarLista vl  = new VentanaConsultarLista(vp, true);
@@ -27,12 +27,11 @@ public class Relaciones {
         DetalleCompraDAO      dcd = new DetalleCompraDAO();
         Coordinador           co  = new Coordinador();
 
-        // 2. Inyectar Coordinador en Vistas
         vp.setCoordinador(co);
         vr.setCoordinador(co);
         vl.setCoordinador(co);
 
-        // 3. Inyectar todo en el Coordinador
+        
         co.setVentanaPrincipal(vp);
         co.setVentanaRegistrar(vr);
         co.setVentanaConsultarLista(vl);
@@ -42,7 +41,7 @@ public class Relaciones {
         co.setCompraDAO(cda);
         co.setDetalleCompraDAO(dcd);
 
-        // 4. Arrancar — siempre al final
+        
         co.mostrarVentanaPrincipal();
     }
 }

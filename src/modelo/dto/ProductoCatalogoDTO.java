@@ -2,35 +2,63 @@ package modelo.dto;
 
 public class ProductoCatalogoDTO {
 
-    // ── Campos de la BD ───────────────────────────────────────────────────────
-    private int    id;
-    private String nombre;
-    private double precioUnitario;
-    private int    stock;
+	private int id;
+	private String nombre;
+	private double precioUnitario;
+	private int stock;
 
-    // ── Campo que llena el usuario en la JTable ───────────────────────────────
-    private int    cantidadSeleccionada;
+	private int cantidadSeleccionada;
 
-    // ── Campo que llena Procesos ──────────────────────────────────────────────
-    private double subtotal;
+	private double subtotal;
 
-    public ProductoCatalogoDTO() {}
+	public ProductoCatalogoDTO() {
+	}
 
-    public int    getId()                       { return id; }
-    public void   setId(int v)                  { this.id = v; }
+	public int getId() {
+		return id;
+	}
 
-    public String getNombre()                   { return nombre; }
-    public void   setNombre(String v)           { this.nombre = v; }
+	public void setId(int v) {
+		this.id = v;
+	}
 
-    public double getPrecioUnitario()           { return precioUnitario; }
-    public void   setPrecioUnitario(double v)   { this.precioUnitario = v; }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public int    getStock()                    { return stock; }
-    public void   setStock(int v)               { this.stock = v; }
+	public void setNombre(String v) {
+		this.nombre = v;
+	}
 
-    public int    getCantidadSeleccionada()          { return cantidadSeleccionada; }
-    public void   setCantidadSeleccionada(int v)     { this.cantidadSeleccionada = v; }
+	public double getPrecioUnitario() {
+		return precioUnitario;
+	}
 
-    public double getSubtotal()                 { return subtotal; }
-    public void   setSubtotal(double v)         { this.subtotal = v; }
+	public void setPrecioUnitario(double v) {
+		this.precioUnitario = v;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int v) {
+		this.stock = v;
+	}
+
+	public int getCantidadSeleccionada() {
+		return cantidadSeleccionada;
+	}
+
+	public void setCantidadSeleccionada(int v) {
+		this.cantidadSeleccionada = v;
+	}
+
+	public double getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(double v) {
+		this.subtotal = v;
+	}
 }
